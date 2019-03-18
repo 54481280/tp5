@@ -41,8 +41,6 @@ class Property extends Admin
         if(request()->isPost()) {
             $Property = model('Property');//获取模型实例
             $post_data = request()->post();//获取post数据
-//            print_r($post_data);exit;
-//            var_dump($post_data);exit;
             $validate = new Validate([
                 'title' => 'require',
                 'name' => 'require',
@@ -67,7 +65,7 @@ class Property extends Admin
             $data = $Property->create($post_data);//新增数据
 
             if($data){
-                $this->success('新增成功',Cookie('__forward__'));
+                $this->success('新增成功','index');
             }else{
                 $this->error($Property->getError());
             }
@@ -89,7 +87,7 @@ class Property extends Admin
             $data = $Property->where('id',$id)->update($post_data);
             if($data){
 
-                $this->success('更新成功', Cookie('__forward__'));
+                $this->success('更新成功', 'index');
             } else {
                 $this->error($Property->getError());
             }

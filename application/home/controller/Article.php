@@ -1,5 +1,7 @@
 <?php
 namespace app\home\controller;
+use think\Db;
+use think\Model;
 use think\Request;
 use app\home\model\Document;
 /**
@@ -100,5 +102,40 @@ class Article extends Home {
 			$this->error('分类不存在或被禁用！');
 		}
 	}
+
+	/*
+	 * 小区通知
+	 */
+	public function articleList(){
+	    //获取分类
+        $class = \request()->get('class');
+	    //获取通知列表
+        $lists = Db::query('select document.id,document.title,document.description,document.create_time,document.view from document join category on document.category_id = category.id WHERE category.title = '.$class.' and document.`status` = 1');
+        foreach($lists as &$list){
+            $list['create_time'] = date('Y-m-d H:i:s',$list['create_time']);
+        }
+        $this->assign('lists',$lists);
+	    return $this->fetch();
+    }
+
+    /*
+     * 通知详情
+     */
+    public function articleShow(){
+        //接收文章ID
+        $id = request()->get('id');
+        //查询此id的文章
+        $notice = \model('document')
+            ->field('id,title,description,create_time,view')
+            ->find($id);
+
+        //修改浏览次数
+        $notice->view += 1;
+        $notice->save();
+        $this->assign('notice',$notice);
+        return $this->fetch();
+    }
+
+
 
 }

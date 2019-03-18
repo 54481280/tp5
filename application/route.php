@@ -23,9 +23,6 @@ return [
     ],
     'home/addons/:_addons/:_controller/:_action' => 'home/addons/execute',//插件执行路由
 
-//    'property' => 'admin/Property/index',//定义物业管理路由
-//    'property/add' => 'admin/Property/add',
-
 
 ];
 
