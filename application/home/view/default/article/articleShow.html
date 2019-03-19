@@ -51,11 +51,41 @@
         <div class="noticeDetailContent">
             {$notice.description}
         </div>
+        {if condition="$class == '\'小区活动\''"}
+            {if condition="$signStatic == 1"}
+            <button class="btn btn-default sign">已报名</button>
+            {/if}
+            {if condition="$signStatic == 0"}
+            <button class="btn btn-success sign" onclick=" sign({$notice['id']})">我要报名</button>
+            {/if}
+        {/if}
     </div>
 </div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="__PUBLIC__/jquery-1.11.2.min.js"></script>
+<script src="__PUBLIC__/static/jquery-1.10.2.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="__PUBLIC__/bootstrap/js/bootstrap.min.js"></script>
+<script>
+    function sign(id){
+        $.ajax({
+            type:'post',
+            url:"{:url('Article/sign')}",
+            data:{
+                noticeId:id,
+                uid:"{:session('user_auth.uid')}",
+            },
+            dataType:'json',
+            success:function(data){
+                if(data.static == 0){
+                    location.href="{:url('Article/login')}";
+                }
+                if(data.static == 1){
+                    location.reload();
+                }
+                alert(data.notice);
+            }
+        });
+    }
+</script>
 </body>
 </html>

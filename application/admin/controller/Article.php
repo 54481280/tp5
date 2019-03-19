@@ -8,6 +8,8 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 use app\admin\model\AuthGroup;
+use app\admin\model\Document;
+use think\Db;
 
 /**
  * 后台内容控制器
@@ -459,14 +461,18 @@ class Article extends Admin {
 
         // 获取当前的模型信息
         $model    =   get_document_model($data['model_id']);
-
+//        //将时间戳转日期
+//        $data['deadline'] = date('Y-m-d H:i:s',$data['deadline']);
         $this->assign('data', $data);
+
+
         $this->assign('model_id', $data['model_id']);
         $this->assign('model',      $model);
 
         //获取表单字段排序
         $fields = get_model_attribute($model['id']);
         $this->assign('fields',     $fields);
+
         //获取当前分类的文档类型
         $this->assign('type_list', get_type_bycate($data['category_id']));
 
@@ -481,16 +487,23 @@ class Article extends Admin {
     public function update(){
     	/* 获取数据对象 */
     	$model_id = input('param.model_id',0);
-    	$data = input();
-    	if(!$model_id)
+
+        $data = input();
+
+        if(!$model_id)
     		$this->error('模型id不能为空');
     	//获取模型信息
     	$model = \think\Db::name('Model')->getById($model_id);
+
         if($model['extend']){
             //更新基础模型
             $logic = logic($model['extend']);
+
+
             $res_id = $logic->updates();
+
             $res_id || $this->error($logic->getError());
+
         }
         $update_id = '';
         if(empty($data['id']) && $model['extend'] != 0){
@@ -498,7 +511,10 @@ class Article extends Admin {
         }
         //更新当前模型
         $logic = logic($model['id']);
+
         $res = $logic->updates($update_id);
+//        //修改结束时间
+//        Document::where('id',$res)->update(['deadline' =>strtotime(input('deadline'))]);
         $res || $this->error($logic->getError());
         $this->success(!empty($data['id'])?'更新成功':'新增成功', Cookie('__forward__'));
     }

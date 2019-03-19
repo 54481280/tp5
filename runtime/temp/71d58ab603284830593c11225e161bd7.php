@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:96:"E:\phpStudy\PHPTutorial\WWW\tp5\public/../application/home/view/default/article\articlelist.html";i:1552721346;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:96:"E:\phpStudy\PHPTutorial\WWW\tp5\public/../application/home/view/default/article\articlelist.html";i:1552958494;}*/ ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -44,11 +44,11 @@
     </nav>
     <!--导航结束-->
 
-    <div class="container-fluid">
+    <div class="container-fluid article-list">
 
         <?php if(is_array($lists) || $lists instanceof \think\Collection || $lists instanceof \think\Paginator): $i = 0; $__LIST__ = $lists;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$list): $mod = ($i % 2 );++$i;?>
             <div class="row noticeList">
-                <a href="<?php echo url('Article/articleShow'); ?>?id=<?php echo $list['id']; ?>">
+                <a href="<?php echo url('Article/articleShow'); ?>?id=<?php echo $list['id']; ?>&class=<?php echo $class; ?>">
                 <div class="col-xs-2">
                     <img class="noticeImg" src="__PUBLIC__/image/1.png" />
                 </div>
@@ -56,16 +56,63 @@
                     <p class="title"><?php echo $list['title']; ?></p>
                     <p class="intro"><?php echo $list['description']; ?></p>
                     <p class="info">浏览: <?php echo $list['view']; ?> <span class="pull-right"><?php echo $list['create_time']; ?></span> </p>
+
                 </div>
                 </a>
             </div>
         <?php endforeach; endif; else: echo "" ;endif; ?>
 
     </div>
+    <br/>
+    <button type="button" class="btn btn-primary onlineBtn" id="moreArticle">加载更多</button>
 </div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="__PUBLIC__/jquery-1.11.2.min.js"></script>
+<script src="__PUBLIC__/static/jquery-1.10.2.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="__PUBLIC__/bootstrap/js/bootstrap.min.js"></script>
+<script>
+    var start = $('.noticeList').length;
+    var end = 3;
+    var className = <?php echo $class; ?>;
+
+    $('#moreArticle').on('click',function(){
+        $.ajax({
+            type:'get',
+            url:"<?php echo url('Article/articlePage'); ?>?",
+            data:{
+                'start':start,
+                'end':end,
+                'class':className
+            },
+            dataType:'json',
+            success:function(data){
+                if(data == '[]'){
+                    $('#moreArticle').hide();
+                    $('.article-list').append('加载完成');
+                }
+                data = JSON.parse(data);
+                str = '';
+                for(i=0;i<data.length;i++){
+                    str +='<div class="row noticeList">\n' +
+                        '                <a href="<?php echo url('Article/articleShow'); ?>?id='+data[i]['id']+'&class=\''+<?php echo $class; ?>+'\'">\n' +
+                        '                <div class="col-xs-2">\n' +
+                        '                    <img class="noticeImg" src="__PUBLIC__/image/1.png" />\n' +
+                        '                </div>\n' +
+                        '                <div class="col-xs-10">\n' +
+                        '                    <p class="title">'+data[i]['title']+'</p>\n' +
+                        '                    <p class="intro">'+data[i]['description']+'</p>\n' +
+                        '                    <p class="info">浏览: '+data[i]['view']+' <span class="pull-right">'+data[i]['create_time']+'</span> </p>\n' +
+                        '                </div>\n' +
+                        '                </a>\n' +
+                        '            </div>'
+                }
+                $('.article-list').append(str);
+            }
+        })
+        start += end;
+    })
+
+
+</script>
 </body>
 </html>

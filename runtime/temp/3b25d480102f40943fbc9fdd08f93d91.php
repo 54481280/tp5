@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:96:"E:\phpStudy\PHPTutorial\WWW\tp5\public/../application/home/view/default/article\articleshow.html";i:1552719836;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:96:"E:\phpStudy\PHPTutorial\WWW\tp5\public/../application/home/view/default/article\articleshow.html";i:1552959621;}*/ ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -52,11 +52,38 @@
         <div class="noticeDetailContent">
             <?php echo $notice['description']; ?>
         </div>
+        <?php if($class == '\'小区活动\''): if($signStatic == 1): ?>
+            <button class="btn btn-default sign">已报名</button>
+            <?php endif; if($signStatic == 0): ?>
+            <button class="btn btn-success sign" onclick=" sign(<?php echo $notice['id']; ?>)">我要报名</button>
+            <?php endif; endif; ?>
     </div>
 </div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="__PUBLIC__/jquery-1.11.2.min.js"></script>
+<script src="__PUBLIC__/static/jquery-1.10.2.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="__PUBLIC__/bootstrap/js/bootstrap.min.js"></script>
+<script>
+    function sign(id){
+        $.ajax({
+            type:'post',
+            url:"<?php echo url('Article/sign'); ?>",
+            data:{
+                noticeId:id,
+                uid:"<?php echo session('user_auth.uid'); ?>",
+            },
+            dataType:'json',
+            success:function(data){
+                if(data.static == 0){
+                    location.href="<?php echo url('Article/login'); ?>";
+                }
+                if(data.static == 1){
+                    location.reload();
+                }
+                alert(data.notice);
+            }
+        });
+    }
+</script>
 </body>
 </html>

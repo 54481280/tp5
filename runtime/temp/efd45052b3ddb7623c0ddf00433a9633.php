@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:88:"E:\phpStudy\PHPTutorial\WWW\tp5\public/../application/home/view/default/index\index.html";i:1552720808;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:88:"E:\phpStudy\PHPTutorial\WWW\tp5\public/../application/home/view/default/index\index.html";i:1552908332;}*/ ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -38,7 +38,7 @@
                 <p class="navbar-text"><a href="faxian.html" class="navbar-link">发现</a></p>
             </div>
             <div class="col-xs-3">
-                <p class="navbar-text"><a href="my.html" class="navbar-link">我的</a></p>
+                <p class="navbar-text"><a href="<?php echo url('Article/login'); ?>" class="navbar-link">我的</a></p>
             </div>
         </div>
     </nav>
@@ -76,7 +76,7 @@
                         </a>
                     </div>
                     <div class="col-xs-4">
-                        <a href="notice.html">
+                        <a href="<?php echo url('Article/articleList'); ?>?class='商家活动'">
                             <div class="indexLabel label-success">
                                 <span class="glyphicon glyphicon-briefcase"></span><br/>
                                 商家活动
@@ -92,7 +92,7 @@
                         </a>
                     </div>
                     <div class="col-xs-4">
-                        <a href="notice.html">
+                        <a href="<?php echo url('Article/articleList'); ?>?class='小区活动'">
                             <div class="indexLabel label-default">
                                 <span class="glyphicon glyphicon-apple"></span><br/>
                                 小区活动
@@ -105,7 +105,7 @@
     </div>
 </div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="__PUBLIC__/jquery-1.11.2.min.js"></script>
+<script src="__PUBLIC__/static/jquery-1.10.2.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="__PUBLIC__/bootstrap/js/bootstrap.min.js"></script>
 </body>

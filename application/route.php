@@ -10,8 +10,6 @@
 // +----------------------------------------------------------------------
 use think\Route;
 
-//定义物业管理路由
-//Route::rule('add','admin/property/add');
 
 return [
     '__pattern__' => [
@@ -22,7 +20,6 @@ return [
         ':name' => ['index/hello', ['method' => 'post']],
     ],
     'home/addons/:_addons/:_controller/:_action' => 'home/addons/execute',//插件执行路由
-
 
 ];
 
