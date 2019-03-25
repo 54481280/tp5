@@ -1,0 +1,18 @@
+{extend name="public/base" /}
+
+{block name="body"}
+    <div class="main-title">
+        <h2>关于我们 </h2>
+    </div>
+
+    <form action="{:url('Property/aboutIndex')}" method="post" class="form-horizontal">
+        <label class="textarea">
+            <textarea name="content">{$content}</textarea>
+        </label>
+        <br/>
+        <button type="submit" class="btn submit-btn">确定</button>
+    </form>
+
+
+
+{/block}

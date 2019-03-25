@@ -2,12 +2,12 @@
 
 {block name="body"}
     <div class="main-title">
-        <h2>在线报修 </h2>
+        <h2>小区租售 </h2>
     </div>
 
     <div class="cf">
-        <a class="btn" href="{:url('add',array('pid'=>input('get.pid',0)))}">新 增</a>
-        <button class="btn ajax-post confirm" url="{:url('del')}" target-form="ids">删 除</button>
+        <a class="btn" href="{:url('rentAdd',array('pid'=>input('get.pid',0)))}">新 增</a>
+        <button class="btn ajax-post confirm" url="{:url('rentDel')}" target-form="ids">删 除</button>
         <!-- 高级搜索 -->
         <div class="search-form fr cf">
             <div class="sleft">
@@ -26,28 +26,35 @@
                             <input class="checkbox check-all" type="checkbox">
                         </th>
                         <th>ID</th>
-                        <th>报修标题</th>
-                        <th>报修人</th>
-                        <th>报修电话</th>
-                        <th>报修时间</th>
+                        <th>租售标题</th>
+                        <th>缩略图</th>
+                        <th>价格</th>
+                        <th>发布分类</th>
+                        <th>简介</th>
+                        <th>发布状态</th>
+                        <th>发布时间</th>
                         <th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
-				{notempty name="list"}
-                {volist name="list" id="property"}
+				{notempty name="lists"}
+                {volist name="lists" id="v"}
                     <tr>
-                        <td><input class="ids row-selected" type="checkbox" name="id[]" value="{$property.id}"></td>
-                        <td>{$property.id}</td>
+                        <td><input class="ids row-selected" type="checkbox" name="id[]" value="{$v.id}"></td>
+                        <td>{$v.id}</td>
                         <td>
-                            <a href="{:url('index?pid='.$property['id'])}">{$property.title}</a>
+                            <a href="{:url('RentIndex?pid='.$v['id'])}">{$v.title}</a>
                         </td>
-                        <td>{$property.name}</td>
-                        <td>{$property.phone}</td>
-                        <td>{$property.add_time}</td>
+                        <td><img src="__ROOT__/uploads/{$v.img}" width="80" height="80"/> </td>
+                        <td>{$v.price}</td>
+                        <td>{if condition="$v.static==1"}售{else}租{/if}</td>
+                        <td>{$v.introduce}</td>
+                        <td>{if condition="$v.state==1"}发布{else}未发布{/if}</td>
+                        <td>{$v.create_time}</td>
                         <td>
-                            <a title="编辑" href="{:url('edit?id='.$property['id'])}">编辑</a>
-                            <a class="confirm ajax-get" title="删除" href="{:url('del?id='.$property['id'])}">删除</a>
+                            <a title="编辑" href="{:url('state?id='.$v['id'])}">{if condition="$v.state==1"}禁用{else}启用{/if}</a>
+                            <a title="编辑" href="{:url('rentEdit?id='.$v['id'])}">编辑</a>
+                            <a class="confirm ajax-get" title="删除" href="{:url('rentDel?id='.$v['id'])}">删除</a>
                         </td>
                     </tr>
                 {/volist}
@@ -59,7 +66,6 @@
         </form>
         <!-- 分页 -->
         <div class="page">
-            {$list->render()}
         </div>
 
     </div>
@@ -89,7 +95,7 @@
                 }
             });
             //导航高亮
-            highlight_subnav('{:url('index')}');
+            highlight_subnav('{:url('rentIndex')}');
             //点击排序
         	$('.list_sort').click(function(){
         		var url = $(this).attr('url');

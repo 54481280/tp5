@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:92:"E:\phpStudy\PHPTutorial\WWW\tp5\public/../application/admin/view/default/property\index.html";i:1552634238;s:89:"E:\phpStudy\PHPTutorial\WWW\tp5\public/../application/admin/view/default/public\base.html";i:1496373782;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:92:"E:\phpStudy\PHPTutorial\WWW\tp5\public/../application/admin/view/default/property\index.html";i:1552967545;s:89:"E:\phpStudy\PHPTutorial\WWW\tp5\public/../application/admin/view/default/public\base.html";i:1496373782;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -101,7 +101,7 @@
 
             
     <div class="main-title">
-        <h2><?php if(isset($data)): ?>[ <?php echo $data['title']; ?> ] 子<?php endif; ?>菜单管理 </h2>
+        <h2>在线报修 </h2>
     </div>
 
     <div class="cf">

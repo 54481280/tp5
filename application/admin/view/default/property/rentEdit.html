@@ -1,0 +1,65 @@
+{extend name="public/base" /}
+
+{block name="body"}
+    <div class="main-title">
+        <h2>{:isset($list['id'])?'编辑':'新增'}后台菜单</h2>
+    </div>
+    <form action="{:url()}" method="post" class="form-horizontal" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="{$list.id}">
+        <div class="form-item">
+            <label class="item-label">标题<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="title" value="{$list.title|default=''}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">图片<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="file" class="text input-large" name="img" value="{$list.img|default=''}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">租售状态<span class="check-tips"></span></label>
+        <label class="radio">
+
+            <input type="radio" name="static" value="1" {if condition="$list.static" } checked {/if} />售
+            <input type="radio" name="static" value="0" {if condition="!$list.static" } checked {/if} />租
+        </label>
+        </div>
+        <div class="form-item">
+            <label class="item-label">价格<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="price" value="{$list.price|default=''}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">电话<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="phone" value="{$list.phone|default=''}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">简介<span class="check-tips"></span></label>
+            <label class="textarea" id="content">
+                <textarea name="introduce">{$list.introduce|default=''}</textarea>
+
+            </label>
+
+        </div>
+        <div class="form-item">
+            <input type="hidden" name="id" value="{$list.id|default=''}">
+            <button class="btn submit-btn ajax-posts" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+        </div>
+    </form>
+{/block}
+
+{block name="script"}
+    <script type="text/javascript">
+        Think.setValue("pid", {$list.pid|default = 0});
+        Think.setValue("hide", {$list.hide|default = 0});
+        Think.setValue("is_dev", {$list.is_dev|default = 0});
+        //导航高亮
+        highlight_subnav('{:url('rentIndex')}');
+    </script>
+{/block}

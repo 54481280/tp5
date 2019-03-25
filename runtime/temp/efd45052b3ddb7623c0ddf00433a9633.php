@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:88:"E:\phpStudy\PHPTutorial\WWW\tp5\public/../application/home/view/default/index\index.html";i:1552908332;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:88:"E:\phpStudy\PHPTutorial\WWW\tp5\public/../application/home/view/default/index\index.html";i:1552985156;}*/ ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -32,7 +32,7 @@
                 <p class="navbar-text"><a href="index.html" class="navbar-link">首页</a></p>
             </div>
             <div class="col-xs-3">
-                <p class="navbar-text"><a href="fuwu.html" class="navbar-link">服务</a></p>
+                <p class="navbar-text"><a href="<?php echo url('Index/server'); ?>" class="navbar-link">服务</a></p>
             </div>
             <div class="col-xs-3">
                 <p class="navbar-text"><a href="faxian.html" class="navbar-link">发现</a></p>
@@ -84,7 +84,7 @@
                         </a>
                     </div>
                     <div class="col-xs-4">
-                        <a href="zushou.html">
+                        <a href="<?php echo url('Index/rent'); ?>?static=0">
                             <div class="indexLabel label-primary">
                                 <span class="glyphicon glyphicon-usd"></span><br/>
                                 小区租售
